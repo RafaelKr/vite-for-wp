@@ -1,11 +1,8 @@
 import camel_case_dash from './camel-case-dash';
 
-type WPGlobals = {
-	[ key: string ]: string | string[];
-};
-
-export default function wp_globals(): WPGlobals {
-	const wpModules = [
+export default function wp_globals(): Record< string, string | string[] > {
+	// See https://github.com/WordPress/WordPress/tree/master/wp-includes/assets
+	const packages = [
 		'a11y',
 		'annotations',
 		'api-fetch',
@@ -19,6 +16,7 @@ export default function wp_globals(): WPGlobals {
 		'components',
 		'compose',
 		'core-data',
+		'customize-widgets',
 		'data',
 		'data-controls',
 		'date',
@@ -26,6 +24,8 @@ export default function wp_globals(): WPGlobals {
 		'dom',
 		'dom-ready',
 		'edit-post',
+		'edit-site',
+		'edit-widgets',
 		'editor',
 		'element',
 		'escape-html',
@@ -41,6 +41,8 @@ export default function wp_globals(): WPGlobals {
 		'notices',
 		'nux',
 		'plugins',
+		'preferences',
+		'preferences-persistence',
 		'primitives',
 		'priority-queue',
 		'redux-routine',
@@ -48,27 +50,29 @@ export default function wp_globals(): WPGlobals {
 		'rich-text',
 		'server-side-render',
 		'shortcode',
+		'style-engine',
 		'token-list',
 		'url',
 		'viewport',
 		'warning',
+		'widgets',
 		'wordcount',
 	];
 
-	const otherModules = {
+	const others = {
+		'backbone': 'Backbone',
 		'jquery': 'jQuery',
-		'tinymce': 'tinymce',
+		'lodash': 'lodash',
 		'moment': 'moment',
 		'react': 'React',
 		'react-dom': 'ReactDOM',
-		'backbone': 'Backbone',
-		'lodash': 'lodash',
+		'tinymce': 'tinymce',
 	};
 
 	return {
-		...otherModules,
+		...others,
 		...Object.fromEntries(
-			wpModules.map( handle => [ `@wordpress/${ handle }`, `wp.${ camel_case_dash( handle ) }` ] ),
+			packages.map( handle => [ `@wordpress/${ handle }`, `wp.${ camel_case_dash( handle ) }` ] ),
 		),
 	};
 }
