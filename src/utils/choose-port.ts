@@ -21,19 +21,19 @@ export default async function choose_port(
 	return new Promise( ( resolve, reject ) => {
 		let { port, host } = options;
 
-		const onError = ( e: Error & { code?: string } ) => {
+		const handle_error = ( e: Error & { code?: string } ) => {
 			if ( e.code === 'EADDRINUSE' ) {
 				server.listen( ++port, host );
 			} else {
-				server.removeListener( 'error', onError );
+				server.removeListener( 'error', handle_error );
 				reject( e );
 			}
 		};
 
-		server.on( 'error', onError );
+		server.on( 'error', handle_error );
 
 		server.listen( port, host, () => {
-			server.removeListener( 'error', onError );
+			server.removeListener( 'error', handle_error );
 			server.close();
 			resolve( port );
 		} );
