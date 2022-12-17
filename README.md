@@ -148,6 +148,7 @@ Note that you will need to add them to the `dependencies` array when enqueueing 
 
 ## Example plugins
 
+-   Vanilla JS: https://github.com/kucrut/vite-for-wp-example-vanilla-js
 -   React: https://github.com/kucrut/vite-for-wp-example-react
 -   Svelte: https://github.com/kucrut/catatan
 
